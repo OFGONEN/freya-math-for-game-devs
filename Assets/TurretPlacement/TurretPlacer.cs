@@ -8,11 +8,6 @@ public class TurretPlacer : MonoBehaviour
 {
     public Transform turret;
 
-    private void OnDrawGizmosSelected()
-    {
-        Debug.Log("On Draw Gizmos Selected");
-    }
-
     private void OnDrawGizmos()
     {
         Ray ray = new Ray(transform.position, transform.forward);
