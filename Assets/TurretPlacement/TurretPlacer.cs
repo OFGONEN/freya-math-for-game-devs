@@ -12,7 +12,6 @@ public class TurretPlacer : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, transform.forward);
 
-        Debug.Log("On Draw Gizmos");
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             var up = hit.normal;
