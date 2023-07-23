@@ -10,6 +10,7 @@ public class Turret : MonoBehaviour
     public Transform target;
     public Transform head;
 
+    public float rotation_speed;
     public float trigger_height = 1f;
     public float trigger_radius = 1f;
     [Range(0, 1)]
@@ -17,12 +18,44 @@ public class Turret : MonoBehaviour
 
     public bool isInHeight, isInRadius, isInAngle;
     
-    private void OnDrawGizmos() => OnTriggerWithThreshold();
+    // private void OnDrawGizmos() => OnTriggerWithThreshold();
+    private void Update() => OnRotate();
 
-    private void OnTest()
+
+    private void OnRotate()
     {
-        var offset = target.position - transform.position;
-        Handles.Label(target.position, "Angle Threshold: " + Vector3.Dot(transform.forward, offset.normalized) );
+        if(!target || !head) return;
+
+        var forward = transform.forward;
+        var right = transform.right;
+        var up = transform.up;
+        
+        var origin = transform.position;
+        var top = origin + up * trigger_height;
+
+        var targetInversedPosition = transform.InverseTransformPoint(target.position);
+        var targetInversedVector = transform.InverseTransformDirection(target.position - transform.position);
+        targetInversedVector.y = 0;
+        targetInversedVector = targetInversedVector.normalized;
+
+        isInHeight = targetInversedPosition.y > 0 && targetInversedPosition.y < trigger_height;
+        isInRadius =
+            (targetInversedPosition.x * targetInversedPosition.x + targetInversedPosition.z * targetInversedPosition.z) <
+            trigger_radius * trigger_radius;
+        isInAngle = trigger_angle_threshold < targetInversedVector.z;
+        bool isTrigger = isInHeight && isInRadius && isInAngle;
+
+        if (isTrigger)
+        {
+            var offset = target.position - head.position;
+            var targetRotation = Quaternion.LookRotation(offset, transform.up);
+            head.rotation = Quaternion.Slerp(head.rotation, targetRotation, rotation_speed * Time.deltaTime);
+        }
+        else
+        {
+            head.localRotation =
+                Quaternion.Slerp(head.localRotation, Quaternion.identity, rotation_speed * Time.deltaTime);
+        }
     }
         
     //Assigment 5.B
@@ -52,7 +85,8 @@ public class Turret : MonoBehaviour
         if (isTrigger)
         {
             var offset = target.position - head.position;
-            head.rotation = Quaternion.LookRotation(offset, transform.up);
+            var targetRotation = Quaternion.LookRotation(offset, transform.up);
+            head.rotation = targetRotation;
         }
         else
         {
