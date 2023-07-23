@@ -11,22 +11,21 @@ public class TurretPlacer : MonoBehaviour
     private void OnDrawGizmos()
     {
         Ray ray = new Ray(transform.position, transform.forward);
-
+    
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             var up = hit.normal;
-            var right = Vector3.Cross(up, transform.forward).normalized;
-            var forward = Vector3.Cross(right, up);
+            var forward = Vector3.Cross(transform.right, up).normalized;
             
             Gizmos.color = Color.green;
             Gizmos.DrawRay(hit.point, up);
-
+    
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(hit.point, right);
+            Gizmos.DrawRay(hit.point, Vector3.Cross(up, forward));
             
             Gizmos.color = Color.blue;
             Gizmos.DrawRay(hit.point, forward);
-
+    
             turret.position = hit.point;
             turret.rotation = Quaternion.LookRotation(forward, up);
         }
