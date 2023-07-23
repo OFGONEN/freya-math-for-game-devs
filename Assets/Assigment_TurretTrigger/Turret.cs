@@ -8,6 +8,7 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     public Transform target;
+    public Transform head;
 
     public float trigger_height = 1f;
     public float trigger_radius = 1f;
@@ -27,7 +28,7 @@ public class Turret : MonoBehaviour
     //Assigment 5.B
     private void OnTriggerWithThreshold()
     {
-        if(!target) return;
+        if(!target || !head) return;
 
         var forward = transform.forward;
         var right = transform.right;
@@ -48,9 +49,16 @@ public class Turret : MonoBehaviour
         isInAngle = trigger_angle_threshold < targetInversedVector.z;
         bool isTrigger = isInHeight && isInRadius && isInAngle;
 
-        Handles.Label(target.position + Vector3.up / 2f, "Threshold: " + Vector3.Dot(forward, targetInversedPosition.normalized));
-        Handles.Label(target.position, "LocalPos: " + targetInversedPosition);
-        
+        if (isTrigger)
+        {
+            var offset = target.position - head.position;
+            head.rotation = Quaternion.LookRotation(offset, transform.up);
+        }
+        else
+        {
+            head.localRotation = Quaternion.identity;
+        }
+
         var color = isTrigger ? Color.red : Color.green;
 
         Handles.color = color;
