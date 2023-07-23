@@ -460,7 +460,7 @@ GameObject:
   m_Layer: 0
   m_Name: turret_target
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -472,8 +472,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849694686}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.53, y: 1.34, z: 0}
+  m_LocalRotation: {x: -0.0215539, y: -0.16371737, z: -0.12873489, w: 0.97783405}
+  m_LocalPosition: {x: -0.026, y: -0.351, z: 0.445}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -651,13 +651,18 @@ PrefabInstance:
       objectReference: {fileID: 849694687}
     - target: {fileID: 793070857542358227, guid: 06167e66e48d3574289bb8761f22c847,
         type: 3}
+      propertyPath: trigger_angle
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 793070857542358227, guid: 06167e66e48d3574289bb8761f22c847,
+        type: 3}
       propertyPath: trigger_height
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 793070857542358227, guid: 06167e66e48d3574289bb8761f22c847,
         type: 3}
       propertyPath: trigger_radius
-      value: 1
+      value: 1.35
       objectReference: {fileID: 0}
     - target: {fileID: 5400498598443199992, guid: 06167e66e48d3574289bb8761f22c847,
         type: 3}
