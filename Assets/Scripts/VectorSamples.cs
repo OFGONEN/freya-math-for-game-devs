@@ -31,10 +31,10 @@ public class VectorSamples : MonoBehaviour
             Handles.Label(transform.position + vector_first, "First: " + vector_first);
             Gizmos.color = Color.blue;
             Gizmos.DrawRay(transform.position, vector_second);           
-            Handles.Label(transform.position + vector_second, "First: " + vector_second);
+            Handles.Label(transform.position + vector_second, "Second: " + vector_second);
             Gizmos.color = Color.red;
             Gizmos.DrawRay(transform.position, crossProduct);
-            Handles.Label(transform.position + crossProduct, "First: " + crossProduct);
+            Handles.Label(transform.position + crossProduct, "Cross Product: " + crossProduct);
         }
     }
 }
