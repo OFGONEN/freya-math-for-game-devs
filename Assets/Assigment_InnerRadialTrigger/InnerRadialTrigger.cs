@@ -55,22 +55,20 @@ public class InnerRadialTrigger : MonoBehaviour
         Handles.DrawWireArc(top, Vector3.up, vLeftOuter, fovAngle, radiusOuter);
     }
 
-    bool Contains(Vector3 position)
+    bool Contains(Vector3 targetPosition)
     {
-        var vecToTargetWorld = position - transform.position;
-        var vecToTarget = transform.InverseTransformVector(vecToTargetWorld);
-
+        var targetLocalPosition = transform.InverseTransformPoint(targetPosition);
         //height check
-        if (vecToTarget.y < 0 || vecToTarget.y > height)
+        if (targetLocalPosition.y < 0 || targetLocalPosition.y > height)
             return false;
         
         //angular check
-        Vector3 flatDirToTarget = vecToTarget;
+        Vector3 flatDirToTarget = targetLocalPosition;
         flatDirToTarget.y = 0;
         float flatDistance = flatDirToTarget.magnitude;
-        flatDirToTarget /= flatDistance;
+        flatDirToTarget = flatDirToTarget.normalized;
 
-        if (flatDirToTarget.z < AngThresh)
+        if (Vector3.Dot(Vector3.forward, flatDirToTarget) < AngThresh)
             return false;
 
         if (flatDistance < radiusInner || flatDistance > radiusOuter)
